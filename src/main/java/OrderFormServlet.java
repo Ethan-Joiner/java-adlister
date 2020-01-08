@@ -11,13 +11,13 @@ public class OrderFormServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
 
         response.setContentType("text/html");
-        response.getWriter().println("<form method=\"POST\" action=\"/order-summary.jsp\">\n" +
+        response.getWriter().println("<form method=\"POST\" action=\"/order-summary\">\n" +
                 "    <label for=\"productName\">Product Name</label>\n" +
                 "    <input id=\"productName\" name=\"productName\" type=\"text\">\n" +
                 "    <br>\n" +
                 "\n" +
                 "    <label for=\"quantity\">Quantity</label>\n" +
-                "    <input id=\"quantity\" name=\"quantity\" type=\"quantity\">\n" +
+                "    <input id=\"quantity\" name=\"quantity\" type=\"number\">\n" +
                 "\n" +
                 "    <button type=\"submit\">Submit</button>\n" +
                 "    </form>");
