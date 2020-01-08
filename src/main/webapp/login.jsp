@@ -22,5 +22,10 @@
 
     <button type="submit">Submit</button>
     </form>
+
+<c:if test="${param.username == 'admin' && param.password == 'password'}">
+    <c:redirect url="./profile.jsp">
+    </c:redirect>
+</c:if>
 </body>
 </html>
