@@ -18,10 +18,14 @@
 <c:forEach var="contact" items="${contacts}">
     <h4>${contact.firstName} ${contact.lastName}</h4>
     <p>${contact.phoneNumber}</p>
+    <form action="/updateContact">
+        <input type="hidden" value="${contact.id}" name="id">
+        <button type="submit">Update Contact</button>
+    </form>
+
 </c:forEach>
 
 <form action="/contacts/addContact.jsp"><button>Add Contact</button></form>
-<form action="/UpdateContactServlet"><button>Update Contact</button></form>
 <form action="/DeleteContactServlet"><button>Delete Contact</button></form>
 
 
