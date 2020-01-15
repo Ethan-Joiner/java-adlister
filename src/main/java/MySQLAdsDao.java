@@ -77,23 +77,24 @@ public class MySQLAdsDao implements Ads {
     }
 
     public static void main(String[] args) throws SQLException {
-
+        Config config = new Config();
 //        testing all method
-//        Ads adsDao = new MySQLAdsDao();
-//        List<Ad> ads = adsDao.all();
-//        for (Ad ad: ads) {
-//            System.out.println(ad);
-//        }
+        Ads adsDao = new MySQLAdsDao(config);
+        List<Ad> ads = adsDao.all();
+        for (Ad ad: ads) {
+            System.out.println(ad);
+        }
 
 //        test insert
-        Ad adToInsert = new Ad(
-                1,
-                "Test Ad Insert 1",
-                "This is the first insert test ad"
-        );
+//        Ad adToInsert = new Ad(
+//                1,
+//                "Test Ad Insert 1",
+//                "This is the first insert test ad"
+//        );
 
-        Ads adsDao = new MySQLAdsDao(config);
-        long lastInsertedId = adsDao.insert(adToInsert);
-        System.out.println(lastInsertedId);
+//        Ads adsDao = new MySQLAdsDao(config);
+//        long lastInsertedId = adsDao.insert(adToInsert);
+//        System.out.println(lastInsertedId);
+//        for (Ad ad: ads)
     }
 }
