@@ -10,6 +10,14 @@ import java.sql.*;
 public class MySQLUsersDao implements Users {
     private Connection connection = null;
 
+    public static void pause(int ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            System.err.format("IOException: %s%n", e);
+        }
+    }
+
     public MySQLUsersDao(Config config) {
         try {
             DriverManager.registerDriver(new Driver());
@@ -26,19 +34,23 @@ public class MySQLUsersDao implements Users {
     @Override
     public Long insert(User user) {
         try {
+
             PreparedStatement stmt = connection.prepareStatement(createInsertQuery(user), Statement.RETURN_GENERATED_KEYS);
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             rs.next();
             return rs.getLong(1);
         } catch (SQLException e) {
+            System.out.println(user.getUsername());
+            System.out.println(user.getEmail());
+            System.out.println(user.getPassword());
             throw new RuntimeException("Error creating a new user.", e);
         }
     }
 
     private String createInsertQuery(User user) {
         return "INSERT INTO users(username, email, password) VALUES "
-                + "(" + user.getUsername() + ", "
+                + "('" + user.getUsername() + "', "
                 + "'" + user.getEmail() + "', "
                 + "'" + user.getPassword() + "')";
     }
@@ -50,16 +62,22 @@ public class MySQLUsersDao implements Users {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
-            rs.next();
-             result = new User(rs.getLong("id"),
-                               rs.getString("username"),
-                               rs.getString("email"),
-                               rs.getString("password"));
+
+            if (rs.next()) {
+
+                result = new User(rs.getLong("id"),
+                        rs.getString("username"),
+                        rs.getString("email"),
+                        rs.getString("password"));
             return result;
+            } else {
+                return null;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Error getting username");
         }
+
     }
 }
 

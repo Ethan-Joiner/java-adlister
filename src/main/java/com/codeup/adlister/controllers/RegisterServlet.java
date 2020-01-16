@@ -22,13 +22,14 @@ public class RegisterServlet extends HttpServlet {
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        request.setAttribute("user", username);
+//        request.setAttribute("user", username);
 
-        if (DaoFactory.getUsersDao().findByUsername(username) != null) {
+        if (username == null || password == null || email == null || !email.contains("@")) {
             response.sendRedirect("/register");
         } else {
             User newUser = new User(username,email,password);
             DaoFactory.getUsersDao().insert(newUser);
+            request.getSession().setAttribute("user", newUser);
             response.sendRedirect("/profile");
         }
 
