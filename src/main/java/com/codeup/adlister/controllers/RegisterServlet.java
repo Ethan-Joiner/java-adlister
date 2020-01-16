@@ -24,7 +24,7 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String hash = BCrypt.hashpw(password, BCrypt.gensalt());
-//        request.setAttribute("user", username);
+
         if (DaoFactory.getUsersDao().findByUsername(username) == null) {
 
             if (username == null || password == null || email == null || !email.contains("@")) {
@@ -34,7 +34,6 @@ public class RegisterServlet extends HttpServlet {
                 DaoFactory.getUsersDao().insert(newUser);
                 request.getSession().setAttribute("user", newUser);
                 request.getSession().setAttribute("isLoggedIn", true);
-
                 response.sendRedirect("/profile");
             }
         } else {
